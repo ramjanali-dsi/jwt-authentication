@@ -1,6 +1,5 @@
 package com.aliashik.service;
 
-import com.aliashik.service.impl.UserRoleServiceImpl;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
@@ -22,7 +21,7 @@ public class JWTService {
 
         //TODO get user roles list from db by username ==============
         Map userRoles = new HashMap();
-        userRoles.put("Roles", new UserRoleServiceImpl().getRolesByUsername(username));
+        userRoles.put("Roles", new UserRoleService().getRolesByUsername(username));
         //TODO ======================================================
 
         JwtBuilder builder = Jwts.builder().setId(username)
