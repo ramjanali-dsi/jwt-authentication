@@ -1,6 +1,7 @@
 package com.aliashik.service;
 
 import com.aliashik.filter.Role;
+import com.aliashik.service.impl.UserRoleServiceImpl;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
@@ -15,20 +16,18 @@ import java.util.Map;
 
 public class JWTService {
 
-    public static String createJWT(String id, String issuer, String subject, long ttlMillis) {
+    public static String createJWT(String username, String issuer, String subject, long ttlMillis) {
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
         long nowMillis = System.currentTimeMillis();
         Date now = new Date(nowMillis);
         Key key = generateKey();
 
-        //TODO get user roles from db by username
+        //TODO get user roles list from db by username ==============
         Map userRoles = new HashMap();
-        userRoles.put("Roles", new ArrayList<Role>(){{
-            add(Role.ROLE_USER);
-            add(Role.ROLE_CLIENT);
-        }});
+        userRoles.put("Roles", new UserRoleServiceImpl().getRolesByUsername(username));
+        //TODO ======================================================
 
-        JwtBuilder builder = Jwts.builder().setId(id)
+        JwtBuilder builder = Jwts.builder().setId(username)
                 .setIssuedAt(now)
                 .addClaims(userRoles)
                 .setSubject(subject)

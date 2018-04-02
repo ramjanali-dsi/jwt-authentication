@@ -25,6 +25,8 @@ import java.security.Key;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 @Provider
@@ -89,8 +91,12 @@ public class AuthenticationAndAuthorizationFilter implements ContainerRequestFil
             if (secured == null) {
                 return new ArrayList<String>();
             } else {
-                String[] allowedRoles = secured.value();
-                return Arrays.asList(allowedRoles);
+                //converting @SecureAPI annotation params(list of enums)
+                //to list of string as after parsing the token we get ROLES as a list of strings
+                List<String> enumNames = Stream.of(secured.value())
+                        .map(Enum::name)
+                        .collect(Collectors.toList());
+                return enumNames;
             }
         }
     }

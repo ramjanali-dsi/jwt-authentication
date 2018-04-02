@@ -10,8 +10,6 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import static com.aliashik.filter.Role.ROLE_ADMIN;
-
 
 @Path("/echo")
 
@@ -25,7 +23,7 @@ public class EchoResource {
 
     @GET
     @Path("jwt")
-    @SecureAPI({"ROLE_ADMIN"})
+    @SecureAPI({Role.ROLE_ADMIN})
     @Produces(MediaType.APPLICATION_JSON)
     public Response echoWithJWTToken(@QueryParam("message") String message) {
         return Response.ok().entity(message == null ? "no message" : message).build();
