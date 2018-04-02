@@ -1,12 +1,12 @@
 package com.aliashik.filter;
 
 import com.aliashik.annotation.SecureAPI;
-import com.aliashik.model.ErrorMessage;
+import com.aliashik.constant.Role;
+import com.aliashik.model.Message;
 import com.aliashik.service.JWTService;
 import io.jsonwebtoken.Claims;
 
 import javax.annotation.Priority;
-import javax.crypto.spec.SecretKeySpec;
 import javax.ws.rs.NotAuthorizedException;
 import javax.ws.rs.Priorities;
 import javax.ws.rs.Produces;
@@ -21,9 +21,7 @@ import javax.ws.rs.ext.Provider;
 import java.io.IOException;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
-import java.security.Key;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -49,16 +47,11 @@ public class AuthenticationAndAuthorizationFilter implements ContainerRequestFil
         try {
             claims = JWTService.parseToken(token);
         } catch (Exception e) {
-            ErrorMessage errorMessage = new ErrorMessage(
-                    "Authentication Error",
-                    401,
-                    "aliashiks.blogspot.com");
             requestContext.abortWith(
                     Response.status(Response.Status.UNAUTHORIZED)
-                            .entity(errorMessage)
+                            .entity(new Message("UNAUTHORIZED", "Invalid access token"))
                             .build());
         }
-
 
         Class<?> resourceClass = resourceInfo.getResourceClass();
         List<String> classRoles = extractRoles(resourceClass);
@@ -72,15 +65,12 @@ public class AuthenticationAndAuthorizationFilter implements ContainerRequestFil
                 checkPermissions(methodRoles, claims);
             }
         } catch (Exception e) {
-            ErrorMessage errorMessage = new ErrorMessage(
-                    "Access Denied",
-                    403,
-                    "aliashiks.blogspot.com");
             requestContext.abortWith(
                     Response.status(Response.Status.FORBIDDEN)
-                            .entity(errorMessage)
+                            .entity(new Message("UNAUTHORIZED", "Access denied"))
                             .build());
         }
+        return;
     }
 
     private List<String> extractRoles(AnnotatedElement annotatedElement) {
@@ -110,11 +100,5 @@ public class AuthenticationAndAuthorizationFilter implements ContainerRequestFil
             throw new Exception("Forbidden");
         }
 
-    }
-
-    public Key generateKey() {
-        String keyString = "aliashik";
-        Key key = new SecretKeySpec(keyString.getBytes(), 0, keyString.getBytes().length, "DES");
-        return key;
     }
 }

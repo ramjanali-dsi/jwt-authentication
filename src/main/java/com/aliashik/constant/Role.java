@@ -1,4 +1,4 @@
-package com.aliashik.filter;
+package com.aliashik.constant;
 
 public enum Role {
     ROLE_ADMIN,

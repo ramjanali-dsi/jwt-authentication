@@ -1,6 +1,5 @@
 package com.aliashik.service;
 
-import com.aliashik.filter.Role;
 import com.aliashik.service.impl.UserRoleServiceImpl;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
@@ -9,7 +8,6 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;

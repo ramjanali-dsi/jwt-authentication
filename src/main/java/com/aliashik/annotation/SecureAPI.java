@@ -1,6 +1,6 @@
 package com.aliashik.annotation;
 
-import com.aliashik.filter.Role;
+import com.aliashik.constant.Role;
 
 import javax.ws.rs.NameBinding;
 import java.lang.annotation.Retention;
