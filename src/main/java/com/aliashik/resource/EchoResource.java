@@ -15,7 +15,7 @@ import static com.aliashik.filter.Role.ROLE_ADMIN;
 
 @Path("/echo")
 
-public class EchoEndpoint {
+public class EchoResource {
 
     @Produces(MediaType.TEXT_PLAIN)
     @GET
@@ -25,7 +25,7 @@ public class EchoEndpoint {
 
     @GET
     @Path("jwt")
-    @SecureAPI({ROLE_ADMIN})
+    @SecureAPI({"ROLE_ADMIN"})
     @Produces(MediaType.APPLICATION_JSON)
     public Response echoWithJWTToken(@QueryParam("message") String message) {
         return Response.ok().entity(message == null ? "no message" : message).build();

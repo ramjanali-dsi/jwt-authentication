@@ -71,7 +71,7 @@ public class AuthenticationAndAuthorizationFilter implements ContainerRequestFil
             }
         } catch (Exception e) {
             ErrorMessage errorMessage = new ErrorMessage(
-                    e.getMessage(),
+                    "Access Denied",
                     403,
                     "aliashiks.blogspot.com");
             requestContext.abortWith(
@@ -89,7 +89,7 @@ public class AuthenticationAndAuthorizationFilter implements ContainerRequestFil
             if (secured == null) {
                 return new ArrayList<String>();
             } else {
-                Role[] allowedRoles = secured.value();
+                String[] allowedRoles = secured.value();
                 return Arrays.asList(allowedRoles);
             }
         }

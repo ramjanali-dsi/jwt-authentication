@@ -1,0 +1,7 @@
+# Created by .ignore support plugin (hsz.mobi)
+.idea/
+JWT-Auth-Role.iml
+target/
+.idea
+.idea/*
+.idea/uiDesigner.xml

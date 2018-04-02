@@ -24,7 +24,7 @@ public class JWTService {
         //TODO get user roles from db by username
         Map userRoles = new HashMap();
         userRoles.put("Roles", new ArrayList<Role>(){{
-            add(Role.ROLE_ADMIN);
+            add(Role.ROLE_USER);
             add(Role.ROLE_CLIENT);
         }});
 

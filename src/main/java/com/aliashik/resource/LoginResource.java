@@ -31,7 +31,7 @@ import static javax.ws.rs.core.Response.Status.UNAUTHORIZED;
 @Produces(APPLICATION_JSON)
 @Consumes(APPLICATION_JSON)
 
-public class UserEndpoint {
+public class LoginResource {
 
     @Context
     private UriInfo uriInfo;
